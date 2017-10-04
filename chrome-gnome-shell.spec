@@ -4,15 +4,16 @@
 #
 Name     : chrome-gnome-shell
 Version  : 9
-Release  : 3
+Release  : 4
 URL      : https://download.gnome.org/sources/chrome-gnome-shell/9/chrome-gnome-shell-9.tar.xz
 Source0  : https://download.gnome.org/sources/chrome-gnome-shell/9/chrome-gnome-shell-9.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0
 Requires: chrome-gnome-shell-bin
-Requires: chrome-gnome-shell-python
+Requires: chrome-gnome-shell-python3
 Requires: chrome-gnome-shell-data
+Requires: chrome-gnome-shell-python
 BuildRequires : cmake
 BuildRequires : jq
 BuildRequires : p7zip
@@ -48,9 +49,19 @@ data components for the chrome-gnome-shell package.
 %package python
 Summary: python components for the chrome-gnome-shell package.
 Group: Default
+Requires: chrome-gnome-shell-python3
 
 %description python
 python components for the chrome-gnome-shell package.
+
+
+%package python3
+Summary: python3 components for the chrome-gnome-shell package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the chrome-gnome-shell package.
 
 
 %prep
@@ -61,7 +72,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1505099390
+export SOURCE_DATE_EPOCH=1507151683
 mkdir clr-build
 pushd clr-build
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DPYTHON_EXECUTABLE=/usr/bin/python3
@@ -69,7 +80,7 @@ make VERBOSE=1  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1505099390
+export SOURCE_DATE_EPOCH=1507151683
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
@@ -92,5 +103,8 @@ popd
 /usr/share/icons/gnome/48x48/apps/org.gnome.ChromeGnomeShell.png
 
 %files python
+%defattr(-,root,root,-)
+
+%files python3
 %defattr(-,root,root,-)
 /usr/lib/python3*/*
