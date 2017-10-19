@@ -4,7 +4,7 @@
 #
 Name     : chrome-gnome-shell
 Version  : 9
-Release  : 4
+Release  : 5
 URL      : https://download.gnome.org/sources/chrome-gnome-shell/9/chrome-gnome-shell-9.tar.xz
 Source0  : https://download.gnome.org/sources/chrome-gnome-shell/9/chrome-gnome-shell-9.tar.xz
 Summary  : No detailed summary available
