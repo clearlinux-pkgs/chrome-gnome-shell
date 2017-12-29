@@ -4,7 +4,7 @@
 #
 Name     : chrome-gnome-shell
 Version  : 9
-Release  : 6
+Release  : 7
 URL      : https://download.gnome.org/sources/chrome-gnome-shell/9/chrome-gnome-shell-9.tar.xz
 Source0  : https://download.gnome.org/sources/chrome-gnome-shell/9/chrome-gnome-shell-9.tar.xz
 Summary  : No detailed summary available
@@ -72,7 +72,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507151683
+export SOURCE_DATE_EPOCH=1514508388
 mkdir clr-build
 pushd clr-build
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DPYTHON_EXECUTABLE=/usr/bin/python3
@@ -80,7 +80,7 @@ make VERBOSE=1  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1507151683
+export SOURCE_DATE_EPOCH=1514508388
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
