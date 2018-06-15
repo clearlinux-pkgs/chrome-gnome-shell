@@ -19,7 +19,7 @@ BuildRequires : jq
 BuildRequires : p7zip
 BuildRequires : pbr
 BuildRequires : pip
-BuildRequires : python-dev
+
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
