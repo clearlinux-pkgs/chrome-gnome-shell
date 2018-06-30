@@ -4,7 +4,7 @@
 #
 Name     : chrome-gnome-shell
 Version  : 10.1
-Release  : 14
+Release  : 15
 URL      : https://download.gnome.org/sources/chrome-gnome-shell/10.1/chrome-gnome-shell-10.1.tar.xz
 Source0  : https://download.gnome.org/sources/chrome-gnome-shell/10.1/chrome-gnome-shell-10.1.tar.xz
 Summary  : No detailed summary available
@@ -13,13 +13,13 @@ License  : GPL-3.0
 Requires: chrome-gnome-shell-bin
 Requires: chrome-gnome-shell-python3
 Requires: chrome-gnome-shell-data
+Requires: chrome-gnome-shell-license
 Requires: chrome-gnome-shell-python
 BuildRequires : cmake
 BuildRequires : jq
 BuildRequires : p7zip
 BuildRequires : pbr
 BuildRequires : pip
-
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
@@ -33,6 +33,7 @@ kn, ko, lt, lv, ml, mr, ms, nl, no, pl, pt_BR, pt_PT, ro, ru, sk, sl, sr, sv, sw
 Summary: bin components for the chrome-gnome-shell package.
 Group: Binaries
 Requires: chrome-gnome-shell-data
+Requires: chrome-gnome-shell-license
 
 %description bin
 bin components for the chrome-gnome-shell package.
@@ -44,6 +45,14 @@ Group: Data
 
 %description data
 data components for the chrome-gnome-shell package.
+
+
+%package license
+Summary: license components for the chrome-gnome-shell package.
+Group: Default
+
+%description license
+license components for the chrome-gnome-shell package.
 
 
 %package python
@@ -72,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522113910
+export SOURCE_DATE_EPOCH=1530382835
 mkdir clr-build
 pushd clr-build
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DPYTHON_EXECUTABLE=/usr/bin/python3
@@ -80,8 +89,10 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1522113910
+export SOURCE_DATE_EPOCH=1530382835
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/chrome-gnome-shell
+cp LICENSE %{buildroot}/usr/share/doc/chrome-gnome-shell/LICENSE
 pushd clr-build
 %make_install
 popd
@@ -101,6 +112,10 @@ popd
 /usr/share/icons/gnome/128x128/apps/org.gnome.ChromeGnomeShell.png
 /usr/share/icons/gnome/16x16/apps/org.gnome.ChromeGnomeShell.png
 /usr/share/icons/gnome/48x48/apps/org.gnome.ChromeGnomeShell.png
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/chrome-gnome-shell/LICENSE
 
 %files python
 %defattr(-,root,root,-)
