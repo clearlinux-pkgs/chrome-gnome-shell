@@ -4,7 +4,7 @@
 #
 Name     : chrome-gnome-shell
 Version  : 10.1
-Release  : 17
+Release  : 18
 URL      : https://download.gnome.org/sources/chrome-gnome-shell/10.1/chrome-gnome-shell-10.1.tar.xz
 Source0  : https://download.gnome.org/sources/chrome-gnome-shell/10.1/chrome-gnome-shell-10.1.tar.xz
 Summary  : No detailed summary available
