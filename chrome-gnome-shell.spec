@@ -4,24 +4,25 @@
 #
 Name     : chrome-gnome-shell
 Version  : 10.1
-Release  : 21
+Release  : 22
 URL      : https://download.gnome.org/sources/chrome-gnome-shell/10.1/chrome-gnome-shell-10.1.tar.xz
 Source0  : https://download.gnome.org/sources/chrome-gnome-shell/10.1/chrome-gnome-shell-10.1.tar.xz
-Summary  : No detailed summary available
+Summary  : Native browser connector for integration with extensions.gnome.org
 Group    : Development/Tools
 License  : GPL-3.0
-Requires: chrome-gnome-shell-bin
-Requires: chrome-gnome-shell-python3
-Requires: chrome-gnome-shell-data
-Requires: chrome-gnome-shell-license
-Requires: chrome-gnome-shell-python
-BuildRequires : cmake
+Requires: chrome-gnome-shell-bin = %{version}-%{release}
+Requires: chrome-gnome-shell-data = %{version}-%{release}
+Requires: chrome-gnome-shell-license = %{version}-%{release}
+Requires: chrome-gnome-shell-python = %{version}-%{release}
+Requires: chrome-gnome-shell-python3 = %{version}-%{release}
+BuildRequires : buildreq-cmake
+BuildRequires : buildreq-distutils3
+BuildRequires : buildreq-gnome
+BuildRequires : gettext-dev
+BuildRequires : git
 BuildRequires : jq
 BuildRequires : p7zip
-BuildRequires : pbr
-BuildRequires : pip
-BuildRequires : python3-dev
-BuildRequires : setuptools
+BuildRequires : python3
 
 %description
 There is limited number of supported locales.
@@ -32,8 +33,8 @@ kn, ko, lt, lv, ml, mr, ms, nl, no, pl, pt_BR, pt_PT, ro, ru, sk, sl, sr, sv, sw
 %package bin
 Summary: bin components for the chrome-gnome-shell package.
 Group: Binaries
-Requires: chrome-gnome-shell-data
-Requires: chrome-gnome-shell-license
+Requires: chrome-gnome-shell-data = %{version}-%{release}
+Requires: chrome-gnome-shell-license = %{version}-%{release}
 
 %description bin
 bin components for the chrome-gnome-shell package.
@@ -58,7 +59,7 @@ license components for the chrome-gnome-shell package.
 %package python
 Summary: python components for the chrome-gnome-shell package.
 Group: Default
-Requires: chrome-gnome-shell-python3
+Requires: chrome-gnome-shell-python3 = %{version}-%{release}
 
 %description python
 python components for the chrome-gnome-shell package.
@@ -81,18 +82,25 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530382835
-mkdir clr-build
+export SOURCE_DATE_EPOCH=1556994183
+mkdir -p clr-build
 pushd clr-build
-cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=/usr/lib64 -DCMAKE_AR=/usr/bin/gcc-ar -DLIB_SUFFIX=64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DPYTHON_EXECUTABLE=/usr/bin/python3
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+%cmake .. -DPYTHON_EXECUTABLE=/usr/bin/python3
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1530382835
+export SOURCE_DATE_EPOCH=1556994183
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/chrome-gnome-shell
-cp LICENSE %{buildroot}/usr/share/doc/chrome-gnome-shell/LICENSE
+mkdir -p %{buildroot}/usr/share/package-licenses/chrome-gnome-shell
+cp LICENSE %{buildroot}/usr/share/package-licenses/chrome-gnome-shell/LICENSE
 pushd clr-build
 %make_install
 popd
@@ -114,8 +122,8 @@ popd
 /usr/share/icons/gnome/48x48/apps/org.gnome.ChromeGnomeShell.png
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/chrome-gnome-shell/LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/chrome-gnome-shell/LICENSE
 
 %files python
 %defattr(-,root,root,-)
