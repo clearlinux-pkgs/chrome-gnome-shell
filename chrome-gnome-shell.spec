@@ -4,10 +4,10 @@
 #
 Name     : chrome-gnome-shell
 Version  : 10.1
-Release  : 26
+Release  : 27
 URL      : https://download.gnome.org/sources/chrome-gnome-shell/10.1/chrome-gnome-shell-10.1.tar.xz
 Source0  : https://download.gnome.org/sources/chrome-gnome-shell/10.1/chrome-gnome-shell-10.1.tar.xz
-Summary  : Native browser connector for integration with extensions.gnome.org
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0
 Requires: chrome-gnome-shell-bin = %{version}-%{release}
@@ -83,24 +83,23 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582907345
+export SOURCE_DATE_EPOCH=1586222820
 mkdir -p clr-build
 pushd clr-build
-# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake .. -DPYTHON_EXECUTABLE=/usr/bin/python3
 make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1582907345
+export SOURCE_DATE_EPOCH=1586222820
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/chrome-gnome-shell
 cp %{_builddir}/chrome-gnome-shell-10.1/LICENSE %{buildroot}/usr/share/package-licenses/chrome-gnome-shell/8624bcdae55baeef00cd11d5dfcfa60f68710a02
